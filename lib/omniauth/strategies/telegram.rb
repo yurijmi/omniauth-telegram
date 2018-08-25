@@ -1,5 +1,4 @@
 require 'omniauth'
-require 'omniauth-telegram'
 require 'openssl'
 require 'base64'
 
