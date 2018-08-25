@@ -1,6 +1,4 @@
-# OmniAuth Telegram &nbsp;[![Build Status](https://secure.travis-ci.org/yurijmi/omniauth-telegram.svg?branch=master)]
-(https://travis-ci.org/yurijmi/omniauth-telegram) [![Gem Version](https://img.shields.io/gem/v/omniauth-telegram.svg)]
-(https://rubygems.org/gems/omniauth-telegram)
+# OmniAuth Telegram &nbsp;[![Build Status](https://secure.travis-ci.org/yurijmi/omniauth-telegram.svg?branch=master)](https://travis-ci.org/yurijmi/omniauth-telegram) [![Gem Version](https://img.shields.io/gem/v/omniauth-telegram.svg)](https://rubygems.org/gems/omniauth-telegram)
 
 Telegram Strategy for OmniAuth. You'll need to setup a bot for Telegram first. [More info here](https://core.telegram.org/widgets/login)
 
