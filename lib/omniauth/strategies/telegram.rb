@@ -46,15 +46,15 @@ module OmniAuth
       
       def callback_phase
         unless FIELDS.all? { |f| request.params.include?(f) }
-          fail!(:field_missing)
+          fail!(:field_missing) && return
         end
         
         unless check_signature
-          fail!(:signature_mismatch)
+          fail!(:signature_mismatch) && return
         end
         
         if Time.now.to_i - request.params["auth_date"].to_i > 86400
-          fail!(:session_expired)
+          fail!(:session_expired) && return
         end
         
         super
