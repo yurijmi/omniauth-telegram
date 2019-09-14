@@ -45,19 +45,11 @@ module OmniAuth
       end
       
       def callback_phase
-        unless FIELDS.all? { |f| request.params.include?(f) }
-          fail!(:field_missing)
+        if error = check_errors
+          fail!(error)
+        else
+          super
         end
-        
-        unless check_signature
-          fail!(:signature_mismatch)
-        end
-        
-        if Time.now.to_i - request.params["auth_date"].to_i > 86400
-          fail!(:session_expired)
-        end
-        
-        super
       end
       
       uid do
@@ -81,6 +73,16 @@ module OmniAuth
       end
       
       private
+
+      def check_errors
+        return :field_missing unless check_fields
+        return :signature_mismatch unless check_signature
+        return :session_expired unless check_session
+      end
+
+      def check_fields
+        FIELDS.all? { |f| request.params.include?(f) }
+      end
       
       def check_signature
         secret = OpenSSL::Digest::SHA256.digest(options[:bot_secret])
@@ -88,6 +90,10 @@ module OmniAuth
         hashed_signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, secret, signature)
         
         request.params["hash"] == hashed_signature
+      end
+
+      def check_session
+        Time.now.to_i - request.params["auth_date"].to_i <= 86400
       end
     end
   end
