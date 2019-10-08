@@ -21,7 +21,7 @@ Here's a quick example, adding the middleware to a Rails app in `config/initiali
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :telegram, ENV['BOT_NAME'], ENV['BOT_SECRET']
+  provider :telegram, ENV['BOT_NICKNAME'], ENV['BOT_SECRET']
 end
 ```
 
@@ -31,7 +31,7 @@ You can customise the button (more info on telegram's api website):
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :telegram, ENV['BOT_NAME'], ENV['BOT_SECRET'],
+  provider :telegram, ENV['BOT_NICKNAME'], ENV['BOT_SECRET'],
     button_options: { 'request-access' => 'write' }
 end
 ```
