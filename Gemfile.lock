@@ -12,7 +12,7 @@ GEM
     omniauth (1.9.0)
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
-    rack (2.0.8)
+    rack (2.2.3)
     rake (10.5.0)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
