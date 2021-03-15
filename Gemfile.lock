@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omniauth-telegram (0.1.1)
+    omniauth-telegram (0.2.0)
       omniauth (>= 1.0)
 
 GEM
@@ -9,7 +9,7 @@ GEM
   specs:
     diff-lcs (1.4.4)
     hashie (4.1.0)
-    omniauth (2.0.2)
+    omniauth (2.0.3)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
       rack-protection
@@ -39,3 +39,6 @@ DEPENDENCIES
   omniauth-telegram!
   rake (>= 10.0)
   rspec (>= 3.0)
+
+BUNDLED WITH
+   2.1.4
