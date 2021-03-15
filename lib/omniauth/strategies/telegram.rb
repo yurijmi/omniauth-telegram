@@ -13,10 +13,10 @@ module OmniAuth
       option :bot_name, nil
       option :bot_secret, nil
       option :button_config, {}
-      
-      FIELDS      = %w[id first_name last_name username photo_url auth_date hash]
-      HASH_FIELDS = %w[auth_date first_name id last_name photo_url username]
-      
+
+      REQUIRED_FIELDS = %w[id hash]
+      SIGNATURE_FIELDS = %w[id first_name last_name username photo_url auth_date]
+
       def request_phase
         html = <<-HTML
           <!DOCTYPE html>
@@ -29,21 +29,21 @@ module OmniAuth
         HTML
         
         data_attrs = options.button_config.map { |k,v| "data-#{k}=\"#{v}\"" }.join(" ")
-        
+
         html << "<script async
               src=\"https://telegram.org/js/telegram-widget.js?4\"
               data-telegram-login=\"#{options.bot_name}\"
               data-auth-url=\"#{callback_url}\"
         #{data_attrs}></script>"
-        
+
         html << <<-HTML
           </body>
           </html>
         HTML
-        
+
         Rack::Response.new(html, 200, 'content-type' => 'text/html').finish
       end
-      
+
       def callback_phase
         if error = check_errors
           fail!(error)
@@ -51,11 +51,11 @@ module OmniAuth
           super
         end
       end
-      
+
       uid do
         request.params["id"]
       end
-      
+
       info do
         {
             name:       "#{request.params["first_name"]} #{request.params["last_name"]}",
@@ -65,13 +65,13 @@ module OmniAuth
             image:      request.params["photo_url"]
         }
       end
-      
+
       extra do
         {
             auth_date: Time.at(request.params["auth_date"].to_i)
         }
       end
-      
+
       private
 
       def check_errors
@@ -81,14 +81,15 @@ module OmniAuth
       end
 
       def check_fields
-        FIELDS.all? { |f| request.params.include?(f) }
+        REQUIRED_FIELDS.all? { |f| request.params.include?(f) }
       end
-      
+
       def check_signature
         secret = OpenSSL::Digest::SHA256.digest(options[:bot_secret])
-        signature = HASH_FIELDS.map { |f| "%s=%s" % [f, request.params[f]] }.join("\n")
+        keys = (request.params.keys & SIGNATURE_FIELDS).sort
+        signature = keys.map { |key| "%s=%s" % [key, request.params[key]] }.join("\n")
         hashed_signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, secret, signature)
-        
+
         request.params["hash"] == hashed_signature
       end
 
