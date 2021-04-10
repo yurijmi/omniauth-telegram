@@ -94,8 +94,12 @@ module OmniAuth
 
       def self.calculate_signature(secret, params)
         secret = OpenSSL::Digest::SHA256.digest(secret)
-        signature = HASH_FIELDS.map { |field| "%s=%s" % [field, params[field]] }.join("\n")
+        signature = generate_comparison_string(params)
         OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, secret, signature)
+      end
+
+      def self.generate_comparison_string(params)
+        (params.keys & HASH_FIELDS).sort.map { |field| "%s=%s" % [field, params[field]] }.join("\n")
       end
     end
   end
