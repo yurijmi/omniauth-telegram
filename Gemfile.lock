@@ -7,6 +7,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (11.1.3)
     diff-lcs (1.4.4)
     hashie (4.1.0)
     omniauth (2.0.3)
@@ -36,6 +37,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (>= 1.16)
+  byebug
   omniauth-telegram!
   rake (>= 10.0)
   rspec (>= 3.0)
