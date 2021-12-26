@@ -13,6 +13,7 @@ module OmniAuth
       option :bot_name, nil
       option :bot_secret, nil
       option :button_config, {}
+      option :callback_url, nil
 
       REQUIRED_FIELDS = %w[id hash]
       HASH_FIELDS     = %w[auth_date first_name id last_name photo_url username]
@@ -31,7 +32,7 @@ module OmniAuth
         data_attrs = options.button_config.map { |k,v| "data-#{k}=\"#{v}\"" }.join(" ")
 
         html << "<script async
-              src=\"https://telegram.org/js/telegram-widget.js?4\"
+              src=\"https://telegram.org/js/telegram-widget.js?15\"
               data-telegram-login=\"#{options.bot_name}\"
               data-auth-url=\"#{callback_url}\"
         #{data_attrs}></script>"
