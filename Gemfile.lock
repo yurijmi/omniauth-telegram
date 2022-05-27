@@ -14,7 +14,7 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
       rack-protection
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-protection (2.1.0)
       rack
     rake (13.0.3)
