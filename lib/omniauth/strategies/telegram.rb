@@ -58,7 +58,8 @@ module OmniAuth
 
       info do
         {
-            name:       "#{request.params["first_name"]} #{request.params["last_name"]}",
+            name:       full_name(request.params["first_name"],
+                                  request.params["last_name"]),
             nickname:   request.params["username"],
             first_name: request.params["first_name"],
             last_name:  request.params["last_name"],
@@ -73,6 +74,14 @@ module OmniAuth
       end
 
       private
+
+      def full_name(first_name, last_name=nil)
+        if last_name
+          "#{first_name} #{last_name}"
+        else
+          first_name
+        end
+      end
 
       def check_errors
         return :field_missing unless check_required_fields
